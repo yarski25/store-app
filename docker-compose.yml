@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  server:
+    container_name: server
+    build:
+      context: ./server
+      dockerfile: .dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_NAME=store
+      - DB_USER=postgres
+      - DB_PASSWORD=ypostgres
+      - DB_HOST=postgres_db
+    depends_on:
+      - postgres_db
+
+  postgres_db:
+    container_name: postgres_db
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=store
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=ypostgres
+    volumes:
+      - postgres_db_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_db_data: {}
