@@ -13,6 +13,8 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=ypostgres
       - DB_HOST=postgres_db
+    volumes:
+      - static_data:/usr/server/static
     depends_on:
       - postgres_db
 
@@ -30,3 +32,4 @@ services:
 
 volumes:
   postgres_db_data: {}
+  static_data: {}
