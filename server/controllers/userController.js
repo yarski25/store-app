@@ -27,18 +27,26 @@ class UserController {
     const user = await User.create({ email, password: hashPassword, role });
     const basket = await Basket.create({ userId: user.id });
     const token = generateJwt(user.id, user.email, user.role);
-    return res.json(token);
+    return res.json({ token });
   }
 
-  async login(req, res) {}
-
-  async check(req, res, next) {
-    const { id } = req.query;
-    if (!id) {
-      return next(ApiError.badRequest("ID is not defined"));
+  async login(req, res, next) {
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return next(ApiError.interal("User not found"));
     }
-    res.json(id);
+    let comparePassword = bcrypt.compareSync(password, user.password);
+
+    if (!comparePassword) {
+      return next(ApiError.internal("Incorrect password"));
+    }
+    const token = generateJwt(user.id, user.email, user.role);
+
+    return res.json({ token });
   }
+
+  async check(req, res, next) {}
 }
 
 module.exports = new UserController();
