@@ -34,7 +34,7 @@ class UserController {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return next(ApiError.interal("User not found"));
+      return next(ApiError.internal("User not found"));
     }
     let comparePassword = bcrypt.compareSync(password, user.password);
 
@@ -46,7 +46,9 @@ class UserController {
     return res.json({ token });
   }
 
-  async check(req, res, next) {}
+  async check(req, res, next) {
+    res.json({ message: "WORKS!" });
+  }
 }
 
 module.exports = new UserController();
