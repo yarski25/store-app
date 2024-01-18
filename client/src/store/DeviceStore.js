@@ -10,23 +10,61 @@ export default class DeviceStore {
       { id: 1, name: "Samsung" },
       { id: 2, name: "Apple" },
     ];
-    this._devices = [{ id: 1, name: "Iphone 12 pro", price: 25000, rating }];
+    this._devices = [
+      {
+        id: 1,
+        name: "Iphone 12 pro",
+        price: 25000,
+        rating: 5,
+        img: "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-r1.jpg",
+      },
+      {
+        id: 2,
+        name: "Iphone 12 pro",
+        price: 35000,
+        rating: 4,
+        img: "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-r1.jpg",
+      },
+      {
+        id: 3,
+        name: "Iphone 12 pro",
+        price: 45000,
+        rating: 2,
+        img: "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-r1.jpg",
+      },
+      {
+        id: 4,
+        name: "Iphone 12 pro",
+        price: 55000,
+        rating: 5,
+        img: "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-r1.jpg",
+      },
+    ];
+
     makeAutoObservable(this); // mobx checks in case of variable changes
   }
 
-  setIsAuth(value) {
-    this._isAuth = value;
+  setTypes(types) {
+    this._types = types;
   }
 
-  setUser(user) {
-    this._user = user;
+  setBrands(brands) {
+    this._brands = brands;
   }
 
-  get isAuth() {
-    return this._isAuth;
+  setDevices(devices) {
+    this._devices = devices;
   }
 
-  get user() {
-    return this._user;
+  get types() {
+    return this._types;
+  }
+
+  get brands() {
+    return this._brands;
+  }
+
+  get devices() {
+    return this._devices;
   }
 }
