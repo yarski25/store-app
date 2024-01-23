@@ -11,7 +11,10 @@ const NavBar = observer(() => {
   return (
     <Navbar bg="dark" data-bs-theme="dark">
       <Container fluid className="plr-0">
-        <NavLink style={{ color: "white" }} to={SHOP_ROUTE}>
+        <NavLink
+          style={{ color: "white", textDecoration: "none" }}
+          to={SHOP_ROUTE}
+        >
           Buy device
         </NavLink>
         {user.isAuth ? (
