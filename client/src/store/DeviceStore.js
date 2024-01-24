@@ -11,28 +11,6 @@ export default class DeviceStore {
     this._brands = [
       { id: 1, name: "Samsung" },
       { id: 2, name: "Apple" },
-      { id: 1, name: "Samsung" },
-      { id: 2, name: "Apple" },
-      { id: 1, name: "Samsung" },
-      { id: 2, name: "Apple" },
-      { id: 1, name: "Samsung" },
-      { id: 2, name: "Apple" },
-      { id: 1, name: "Samsung" },
-      { id: 2, name: "Apple" },
-      { id: 1, name: "Samsung" },
-      { id: 2, name: "Apple" },
-      { id: 1, name: "Samsung" },
-      { id: 2, name: "Apple" },
-      { id: 1, name: "Samsung" },
-      { id: 2, name: "Apple" },
-      { id: 1, name: "Samsung" },
-      { id: 2, name: "Apple" },
-      { id: 1, name: "Samsung" },
-      { id: 2, name: "Apple" },
-      { id: 1, name: "Samsung" },
-      { id: 2, name: "Apple" },
-      { id: 1, name: "Samsung" },
-      { id: 2, name: "Apple" },
     ];
     this._devices = [
       {
