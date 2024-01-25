@@ -11,6 +11,8 @@ export default class DeviceStore {
     this._brands = [
       { id: 1, name: "Samsung" },
       { id: 2, name: "Apple" },
+      { id: 3, name: "Lenovo" },
+      { id: 4, name: "Asus" },
     ];
     this._devices = [
       {
@@ -38,6 +40,20 @@ export default class DeviceStore {
         id: 4,
         name: "Iphone 12 pro",
         price: 55000,
+        rating: 5,
+        img: "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-r1.jpg",
+      },
+      {
+        id: 5,
+        name: "Iphone 12 pro",
+        price: 5000,
+        rating: 2,
+        img: "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-r1.jpg",
+      },
+      {
+        id: 6,
+        name: "Iphone 12 pro",
+        price: 3000,
         rating: 5,
         img: "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-r1.jpg",
       },
