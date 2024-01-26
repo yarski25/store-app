@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 
 export default class UserStore {
   constructor() {
-    this._isAuth = false; // underline _ means that variable can't be changed
+    this._isAuth = true; // underline _ means that variable can't be changed
     this._user = {};
     makeAutoObservable(this); // mobx checks in case of variable changes
   }
