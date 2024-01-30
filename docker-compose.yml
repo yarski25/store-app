@@ -1,6 +1,19 @@
 version: "3.9"
-
 services:
+  client:
+    container_name: client
+    build:
+      context: ./client
+      dockerfile: .dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - REACT_APP_API_URL="http://localhost:5173/"
+    # networks:
+    #   - client-server
+    depends_on:
+      - server
+
   server:
     container_name: server
     build:
@@ -15,6 +28,9 @@ services:
       - DB_HOST=postgres_db
     volumes:
       - static_data:/usr/server/static
+    # networks:
+    #   - server-db
+    #   - client-server
     depends_on:
       - postgres_db
 
@@ -29,7 +45,12 @@ services:
       - POSTGRES_PASSWORD=ypostgres
     volumes:
       - postgres_db_data:/var/lib/postgresql/data
+    # networks:
+    #   - server-db
 
 volumes:
   postgres_db_data: {}
   static_data: {}
+# networks:
+#   client-server:
+#   server-db:
