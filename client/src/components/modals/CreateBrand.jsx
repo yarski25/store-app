@@ -1,5 +1,5 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 const CreateBrand = ({ show, onHide }) => {
   return (
@@ -24,9 +24,9 @@ const CreateBrand = ({ show, onHide }) => {
   );
 };
 
-CreateBrand.propTypes = {
-  show: PropTypes.bool | undefined,
-  onHide: PropTypes.func | undefined,
-};
+// CreateBrand.propTypes = {
+//   show: PropTypes.bool | undefined,
+//   onHide: PropTypes.func | undefined,
+// };
 
 export default CreateBrand;

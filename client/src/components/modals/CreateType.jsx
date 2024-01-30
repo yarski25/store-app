@@ -1,5 +1,5 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 const CreateType = ({ show, onHide }) => {
   return (
@@ -24,9 +24,9 @@ const CreateType = ({ show, onHide }) => {
   );
 };
 
-CreateType.propTypes = {
-  show: PropTypes.bool | undefined,
-  onHide: PropTypes.func | undefined,
-};
+// CreateType.propTypes = {
+//   show: PropTypes.bool | undefined,
+//   onHide: PropTypes.func | undefined,
+// };
 
 export default CreateType;

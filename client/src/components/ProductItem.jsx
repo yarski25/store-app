@@ -1,8 +1,8 @@
 import { Card, Col, Image } from "react-bootstrap";
 import { DEVICE_ROUTE } from "../utils/consts";
 import { NavLink, useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
-import DeviceStore from "../store/DeviceStore";
+// import PropTypes from "prop-types";
+// import DeviceStore from "../store/DeviceStore";
 import star from "../assets/star.png";
 
 const ProductItem = ({ device }) => {
@@ -39,6 +39,6 @@ const ProductItem = ({ device }) => {
   );
 };
 
-ProductItem.propTypes = { device: PropTypes.instanceOf(DeviceStore) };
+// ProductItem.propTypes = { device: PropTypes.instanceOf(DeviceStore) };
 
 export default ProductItem;
