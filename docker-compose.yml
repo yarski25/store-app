@@ -4,13 +4,14 @@ services:
     container_name: client
     build:
       context: ./client
-      dockerfile: .dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - "5173:5173"
+    stdin_open: true
     environment:
-      - REACT_APP_API_URL="http://localhost:5173/"
-    # networks:
-    #   - client-server
+      - REACT_APP_API_URL=http://localhost:5173/
+    networks:
+      - client-server
     depends_on:
       - server
 
@@ -18,7 +19,7 @@ services:
     container_name: server
     build:
       context: ./server
-      dockerfile: .dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - "5000:5000"
     environment:
@@ -28,15 +29,18 @@ services:
       - DB_HOST=postgres_db
     volumes:
       - static_data:/usr/server/static
-    # networks:
-    #   - server-db
-    #   - client-server
     depends_on:
       - postgres_db
+    networks:
+      - client-server
+      - server-db
+    # expose:
+    #   - 5000
 
   postgres_db:
     container_name: postgres_db
     image: postgres:16
+    restart: always
     ports:
       - "5432:5432"
     environment:
@@ -45,12 +49,14 @@ services:
       - POSTGRES_PASSWORD=ypostgres
     volumes:
       - postgres_db_data:/var/lib/postgresql/data
-    # networks:
-    #   - server-db
+    networks:
+      - server-db
+    # expose:
+    #   - 5432
 
 volumes:
   postgres_db_data: {}
   static_data: {}
-# networks:
-#   client-server:
-#   server-db:
+networks:
+  client-server:
+  server-db:
