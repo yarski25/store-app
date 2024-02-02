@@ -7,8 +7,11 @@ import { observer } from "mobx-react-lite";
 
 const NavBar = observer(() => {
   const { user } = useContext(Context);
-  console.log(user);
   const navigate = useNavigate();
+  const logOut = () => {
+    user.setUser({});
+    user.setIsAuth(false);
+  };
   return (
     <Navbar bg="dark" data-bs-theme="dark">
       <Container fluid className="plr-0">
@@ -28,7 +31,7 @@ const NavBar = observer(() => {
             </Button>
             <Button
               variant="outline-light"
-              onClick={() => navigate(LOGIN_ROUTE)}
+              onClick={() => logOut()}
               className="ms-2"
             >
               Log out
@@ -38,7 +41,7 @@ const NavBar = observer(() => {
           <Nav className="ml-auto" style={{ color: "white" }}>
             <Button
               variant="outline-light"
-              onClick={() => user.setIsAuth(true)}
+              onClick={() => navigate(LOGIN_ROUTE)}
             >
               Log in
             </Button>
