@@ -21,7 +21,12 @@ const ProductItem = ({ device }) => {
         //onClick={() => device.setSelectedBrand(brand)}
         //border={brand.id === device.selectedBrand.id ? "danger" : "light"}
       >
-        <Card.Img variant="top" width={150} height={150} src={device.img} />
+        <Card.Img
+          variant="top"
+          width={150}
+          height={150}
+          src={process.env.REACT_APP_API_URL + "/" + device.img}
+        />
         <Card.Body>
           {/* <Card.Title>{device.name}</Card.Title> */}
           <Card.Text className="text-black-50 d-flex justify-content-between align-items-center">

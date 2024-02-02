@@ -1,25 +1,38 @@
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import star from "../assets/star.png";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { fetchOneDevice } from "../api/deviceAPI";
 const DevicePage = () => {
-  const device = {
-    id: 1,
-    name: "Iphone 12 pro",
-    price: 25000,
-    rating: 5,
-    img: "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-r1.jpg",
-  };
-  const description = [
-    { id: 1, title: "Operating memory", description: "5 GB" },
-    { id: 2, title: "Camera", description: "12 Mpx" },
-    { id: 3, title: "Processor", description: "Pentium 4" },
-    { id: 4, title: "Number of cors", description: "2" },
-    { id: 5, title: "Battery", description: "4000 mAh" },
-  ];
+  const [device, setDevice] = useState({ info: [] });
+  const { id } = useParams();
+  useEffect(() => {
+    fetchOneDevice(id).then((data) => setDevice(data));
+  }, []);
+  // const device = {
+  //   id: 1,
+  //   name: "Iphone 12 pro",
+  //   price: 25000,
+  //   rating: 5,
+  //   img: "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-r1.jpg",
+  // };
+  // const description = [
+  //   { id: 1, title: "Operating memory", description: "5 GB" },
+  //   { id: 2, title: "Camera", description: "12 Mpx" },
+  //   { id: 3, title: "Processor", description: "Pentium 4" },
+  //   { id: 4, title: "Number of cors", description: "2" },
+  //   { id: 5, title: "Battery", description: "4000 mAh" },
+  // ];
+
   return (
     <Container className="mt-3">
       <Row>
         <Col md={4}>
-          <Image width={300} height={300} src={device.img} />
+          <Image
+            width={300}
+            height={300}
+            src={process.env.REACT_APP_API_URL + "/" + device.img}
+          />
         </Col>
         <Col md={4}>
           <Row className="d-flex flex-column align-items-center">
@@ -55,7 +68,7 @@ const DevicePage = () => {
       </Row>
       <Row className="d-flex flex-column m-3">
         <h1>Description</h1>
-        {description.map((info, index) => (
+        {device.info.map((info, index) => (
           <Row
             key={info.id}
             style={{
