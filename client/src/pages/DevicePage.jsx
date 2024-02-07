@@ -13,7 +13,14 @@ const DevicePage = () => {
   }, []);
 
   const addItem = (deviceId) => {
-    cart.setCart({});
+    if (cart)
+      cart.setCartDevice({
+        id: 1,
+        deviceId: id,
+        count: cart.cartDevice.count + 1,
+        cartId: cart.id,
+      });
+    console.log(cart);
   };
   // const device = {
   //   id: 1,
@@ -68,7 +75,7 @@ const DevicePage = () => {
             }}
           >
             <h3>From: {device.price} CZK</h3>
-            <Button onClick={() => addItem()} variant="outline-dark">
+            <Button onClick={() => addItem({})} variant="outline-dark">
               Add to cart
             </Button>
           </Card>

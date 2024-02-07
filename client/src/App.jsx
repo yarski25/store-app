@@ -8,7 +8,7 @@ import { check } from "./api/userAPI";
 import { Spinner } from "react-bootstrap";
 
 const App = observer(() => {
-  const { user } = useContext(Context);
+  const { user, cart } = useContext(Context);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,6 +16,7 @@ const App = observer(() => {
       .then((data) => {
         user.setUser(true);
         user.setIsAuth(true);
+        cart.setCart({ id: 1 });
       })
       .finally(() => setLoading(false));
   }, []);

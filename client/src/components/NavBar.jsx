@@ -6,11 +6,12 @@ import { ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from "../utils/consts";
 import { observer } from "mobx-react-lite";
 
 const NavBar = observer(() => {
-  const { user } = useContext(Context);
+  const { user, cart } = useContext(Context);
   const navigate = useNavigate();
   const logOut = () => {
     user.setUser({});
     user.setIsAuth(false);
+    cart.setCart({});
   };
   return (
     <Navbar bg="dark" data-bs-theme="dark">
