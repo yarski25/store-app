@@ -1,14 +1,20 @@
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import star from "../assets/star.png";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchOneDevice } from "../api/deviceAPI";
+import { Context } from "../main";
 const DevicePage = () => {
   const [device, setDevice] = useState({ info: [] });
   const { id } = useParams();
+  const { cart } = useContext(Context);
   useEffect(() => {
     fetchOneDevice(id).then((data) => setDevice(data));
   }, []);
+
+  const addItem = (deviceId) => {
+    cart.setCart({});
+  };
   // const device = {
   //   id: 1,
   //   name: "Iphone 12 pro",
@@ -62,7 +68,9 @@ const DevicePage = () => {
             }}
           >
             <h3>From: {device.price} CZK</h3>
-            <Button variant="outline-dark">Add to cart</Button>
+            <Button onClick={() => addItem()} variant="outline-dark">
+              Add to cart
+            </Button>
           </Card>
         </Col>
       </Row>
