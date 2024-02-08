@@ -7,7 +7,7 @@ import { Context } from "../main";
 import { observer } from "mobx-react-lite";
 
 const Auth = observer(() => {
-  const { user } = useContext(Context);
+  const { user, cart } = useContext(Context);
   const location = useLocation();
   const navigate = useNavigate();
   const isLogin = location.pathname === LOGIN_ROUTE;
@@ -24,6 +24,8 @@ const Auth = observer(() => {
       }
       user.setUser(user);
       user.setIsAuth(true);
+      cart.setCart({ id: 1 });
+      console.log(cart.cart.id);
       navigate(SHOP_ROUTE);
     } catch (e) {
       alert(e.response.data.message);

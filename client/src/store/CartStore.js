@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 
 export default class CartStore {
   constructor() {
-    this._cart = {};
+    this._cart = {}; // {id: 1 }
     //this._cartDevice = [{ id: 1, deviceId: 1, count: 1, cartId: 1 }];
     this._cartDevice = {};
     makeAutoObservable(this); // mobx checks in case of variable changes

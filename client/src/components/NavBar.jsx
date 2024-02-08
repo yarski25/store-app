@@ -12,6 +12,7 @@ const NavBar = observer(() => {
     user.setUser({});
     user.setIsAuth(false);
     cart.setCart({});
+    console.log(cart.cart.id);
   };
   return (
     <Navbar bg="dark" data-bs-theme="dark">

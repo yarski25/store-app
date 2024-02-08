@@ -4,7 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchOneDevice } from "../api/deviceAPI";
 import { Context } from "../main";
-const DevicePage = () => {
+import { observer } from "mobx-react-lite";
+const DevicePage = observer(() => {
   const [device, setDevice] = useState({ info: [] });
   const { id } = useParams();
   const { cart } = useContext(Context);
@@ -13,14 +14,17 @@ const DevicePage = () => {
   }, []);
 
   const addItem = (deviceId) => {
-    if (cart)
-      cart.setCartDevice({
-        id: 1,
-        deviceId: id,
-        count: cart.cartDevice.count + 1,
-        cartId: cart.id,
-      });
-    console.log(cart);
+    cart.setCartDevice({
+      id: 1,
+      deviceId: deviceId,
+      count: cart.cartDevice.count + 1,
+      cartId: cart.cart.id,
+    });
+    console.log(cart.cart.id);
+    console.log(cart.cartDevice.id);
+    console.log(cart.cartDevice.deviceId);
+    console.log(cart.cartDevice.count);
+    console.log(cart.cartDevice.cartId);
   };
   // const device = {
   //   id: 1,
@@ -75,7 +79,7 @@ const DevicePage = () => {
             }}
           >
             <h3>From: {device.price} CZK</h3>
-            <Button onClick={() => addItem({})} variant="outline-dark">
+            <Button onClick={() => addItem(id)} variant="outline-dark">
               Add to cart
             </Button>
           </Card>
@@ -97,6 +101,6 @@ const DevicePage = () => {
       </Row>
     </Container>
   );
-};
+});
 
 export default DevicePage;
