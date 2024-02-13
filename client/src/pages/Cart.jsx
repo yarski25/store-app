@@ -1,7 +1,13 @@
 import { Button, Stack } from "react-bootstrap";
 import CartItem from "../components/CartItem";
+import { fetchCart } from "../api/cartAPI";
+import { useEffect } from "react";
 
 const Cart = () => {
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
   const testArray = [1, 2, 3];
   return (
     <Stack className="col-md-5 mx-auto" gap={3}>

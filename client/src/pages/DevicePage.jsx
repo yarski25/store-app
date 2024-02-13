@@ -17,7 +17,7 @@ const DevicePage = observer(() => {
     cart.setCartDevice({
       id: 1,
       deviceId: deviceId,
-      count: cart.cartDevice.count + 1,
+      count: 1,
       cartId: cart.cart.id,
     });
     console.log(cart.cart.id);

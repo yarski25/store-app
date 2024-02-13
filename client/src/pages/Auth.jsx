@@ -24,7 +24,8 @@ const Auth = observer(() => {
       }
       user.setUser(user);
       user.setIsAuth(true);
-      cart.setCart({ id: 1 });
+      cart.setCart(cart);
+      console.log(user.user);
       console.log(cart.cart.id);
       navigate(SHOP_ROUTE);
     } catch (e) {

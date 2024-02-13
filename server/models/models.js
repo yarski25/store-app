@@ -10,11 +10,11 @@ const User = sequelize.define("user", {
   role: { type: DataTypes.STRING, defaultValue: "USER" },
 });
 
-const Basket = sequelize.define("basket", {
+const Cart = sequelize.define("cart", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-const BasketDevice = sequelize.define("basket_device", {
+const CartDevice = sequelize.define("cart_device", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
@@ -52,14 +52,14 @@ const DeviceInfo = sequelize.define("device_info", {
 });
 
 // model relations
-User.hasOne(Basket);
-Basket.belongsTo(User);
+User.hasOne(Cart);
+Cart.belongsTo(User);
 
 User.hasMany(Rating);
 Rating.belongsTo(User);
 
-Basket.hasMany(BasketDevice);
-BasketDevice.belongsTo(Basket);
+Cart.hasMany(CartDevice);
+CartDevice.belongsTo(Cart);
 
 Type.hasMany(Device);
 Device.belongsTo(Type);
@@ -70,8 +70,8 @@ Device.belongsTo(Brand);
 Device.hasMany(Rating);
 Rating.belongsTo(Device);
 
-Device.hasMany(BasketDevice);
-BasketDevice.belongsTo(Device);
+Device.hasMany(CartDevice);
+CartDevice.belongsTo(Device);
 
 Device.hasMany(DeviceInfo, { as: "info" });
 DeviceInfo.belongsTo(Device);
@@ -81,8 +81,8 @@ Brand.belongsToMany(Type, { through: TypeBrand });
 
 module.exports = {
   User,
-  Basket,
-  BasketDevice,
+  Cart,
+  CartDevice,
   Device,
   Type,
   Brand,

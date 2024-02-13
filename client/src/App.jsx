@@ -16,7 +16,7 @@ const App = observer(() => {
       .then((data) => {
         user.setUser(true);
         user.setIsAuth(true);
-        cart.setCart({ id: 1 });
+        cart.setCart(true);
       })
       .finally(() => setLoading(false));
   }, []);
