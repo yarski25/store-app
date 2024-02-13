@@ -2,35 +2,36 @@ const ApiError = require("../error/apiError");
 const { Cart, CartDevice } = require("../models/models");
 
 class CartController {
-  // async create(req, res, next) {
-  //   try {
-  //     const user = await User.create({ email, password: hashPassword, role });
-  //     const cart = await CartDevice.create({ userId: user.id });
+  async create(req, res, next) {
+    try {
+      const currentUser = req.user.id;
 
-  //     const device = await Device.create({
-  //       name,
-  //       price,
-  //       brandId,
-  //       typeId,
-  //       img: fileName,
-  //     });
+      const cart = await Cart.findOne({ currentUser });
 
-  //     if (info) {
-  //       info = JSON.parse(info);
-  //       info.forEach((i) => {
-  //         DeviceInfo.create({
-  //           title: i.title,
-  //           description: i.description,
-  //           deviceId: device.id,
-  //         });
-  //       });
-  //     }
+      if (!cart) {
+        return next(ApiError.internal("Cart not found"));
+      }
 
-  //     return res.json(device);
-  //   } catch (e) {
-  //     next(ApiError.badRequest(e.message));
-  //   }
-  // }
+      const cartDevices = await CartDevice.findAndCountAll({
+        where: { cartId: cart.id },
+      });
+
+      if (!cartDevices.count) {
+        return next(ApiError.internal("Cart is empty"));
+      }
+
+      let { deviceId } = req.body;
+
+      const cartDevice = await CartDevice.create({
+        deviceId: deviceId,
+        cartId: cart.id,
+      });
+
+      return res.json(cartDevice);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+  }
 
   async getAll(req, res, next) {
     try {
