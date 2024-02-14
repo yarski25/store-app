@@ -16,16 +16,42 @@ class CartController {
         where: { cartId: cart.id },
       });
 
+      let { deviceId, quantity } = req.body;
+
+      // case #1 if cart is empty
       if (!cartDevices.count) {
-        return next(ApiError.internal("Cart is empty"));
+        const cartDevice = await CartDevice.create({
+          deviceId: deviceId,
+          quantity: quantity,
+          cartId: cart.id,
+        });
+
+        return res.json(cartDevice);
       }
 
-      let { deviceId } = req.body;
+      // case #2 if cart is not empty
+      cartDevices.rows.filter((cartItem) => cartItem.deviceId === deviceId);
 
-      const cartDevice = await CartDevice.create({
-        deviceId: deviceId,
-        cartId: cart.id,
-      });
+      // case #3 if new device is not found in the cart
+      if (!cartDevices.rows) {
+        const cartDevice = await CartDevice.create({
+          deviceId: deviceId,
+          quantity: quantity,
+          cartId: cart.id,
+        });
+
+        return res.json(cartDevice);
+      }
+
+      // case #4 if new device is already in the cart
+
+      // const cartDevice = await CartDevice.create({
+      //   deviceId: deviceId,
+      //   quantity: quantity,
+      //   cartId: cart.id,
+      // });
+
+      // await CartDevice.update({ quantity: cartDevice.rows. });
 
       return res.json(cartDevice);
     } catch (e) {
