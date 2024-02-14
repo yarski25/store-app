@@ -32,6 +32,14 @@ class CartController {
       // case #2 if cart is not empty
       cartDevices.rows.filter((cartItem) => cartItem.deviceId === deviceId);
 
+      if (cartDevices.rows.length > 1) {
+        return next(
+          ApiError.internal(
+            "Cart has multiple cart devices with the same device ID"
+          )
+        );
+      }
+
       // case #3 if new device is not found in the cart
       if (!cartDevices.rows) {
         const cartDevice = await CartDevice.create({
@@ -45,13 +53,14 @@ class CartController {
 
       // case #4 if new device is already in the cart
 
-      // const cartDevice = await CartDevice.create({
-      //   deviceId: deviceId,
-      //   quantity: quantity,
-      //   cartId: cart.id,
-      // });
-
-      // await CartDevice.update({ quantity: cartDevice.rows. });
+      const cartDevice = await CartDevice.update(
+        { quantity: cartDevices.rows[0].quantity + quantity },
+        {
+          where: {
+            deviceId: deviceId,
+          },
+        }
+      );
 
       return res.json(cartDevice);
     } catch (e) {

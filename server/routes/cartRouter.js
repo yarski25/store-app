@@ -3,7 +3,7 @@ const router = new Router();
 const cartController = require("../controllers/cartController");
 const authMiddleware = require("../middleware/authMiddleware");
 
-// router.post("/", cartController.create);
+router.post("/", authMiddleware, cartController.create);
 router.get("/", authMiddleware, cartController.getAll);
 
 module.exports = router;
