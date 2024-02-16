@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { fetchOneDevice } from "../api/deviceAPI";
 import { Context } from "../main";
 import { observer } from "mobx-react-lite";
+import { addCartItem } from "../api/cartAPI";
 const DevicePage = observer(() => {
   const [device, setDevice] = useState({ info: [] });
   const { id } = useParams();
@@ -13,18 +14,22 @@ const DevicePage = observer(() => {
     fetchOneDevice(id).then((data) => setDevice(data));
   }, []);
 
-  const addItem = (deviceId) => {
-    cart.setCartDevice({
-      id: 1,
-      deviceId: deviceId,
-      count: 1,
-      cartId: cart.cart.id,
-    });
-    console.log(cart.cart.id);
-    console.log(cart.cartDevice.id);
-    console.log(cart.cartDevice.deviceId);
-    console.log(cart.cartDevice.count);
-    console.log(cart.cartDevice.cartId);
+  const addItem = () => {
+    console.log(id);
+    addCartItem({ deviceId: Number(id), quantity: 1 }).then(() =>
+      console.log(`cart item added`)
+    );
+    // cart.setCartDevice({
+    //   id: 1,
+    //   deviceId: deviceId,
+    //   count: 1,
+    //   cartId: cart.cart.id,
+    // });
+    // console.log(cart.cart.id);
+    // console.log(cart.cartDevice.id);
+    // console.log(cart.cartDevice.deviceId);
+    // console.log(cart.cartDevice.count);
+    // console.log(cart.cartDevice.cartId);
   };
   // const device = {
   //   id: 1,
@@ -79,7 +84,7 @@ const DevicePage = observer(() => {
             }}
           >
             <h3>From: {device.price} CZK</h3>
-            <Button onClick={() => addItem(id)} variant="outline-dark">
+            <Button onClick={() => addItem()} variant="outline-dark">
               Add to cart
             </Button>
           </Card>
