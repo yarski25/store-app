@@ -145,7 +145,6 @@ class CartController {
         return next(ApiError.internal("Cart is empty"));
       }
 
-      console.log(cartDevices);
       return res.json(cartDevices);
     } catch (e) {
       next(ApiError.badRequest(e.message));

@@ -10,13 +10,15 @@ export default class CartStore {
     //   { id: 3, userId: 3 },
     // ];
 
-    this._cartDevice = [];
+    this._cartDevices = [];
 
     // this._cartDevice = [
     //   { id: 1, deviceId: 1, count: 0, cartId: 1 },
     //   { id: 2, deviceId: 2, count: 0, cartId: 1 },
     //   { id: 3, deviceId: 3, count: 0, cartId: 1 },
     // ];
+
+    this._totalCount = 0; // total count of cart devices
 
     makeAutoObservable(this); // mobx checks in case of variable changes
   }
@@ -25,15 +27,23 @@ export default class CartStore {
     this._cart = cart;
   }
 
-  setCartDevice(cartDevice) {
-    this._cartDevice = cartDevice;
+  setCartDevices(cartDevices) {
+    this._cartDevices = cartDevices;
+  }
+
+  setTotalCount(totalCount) {
+    this._totalCount = totalCount;
   }
 
   get cart() {
     return this._cart;
   }
 
-  get cartDevice() {
-    return this._cartDevice;
+  get cartDevices() {
+    return this._cartDevices;
+  }
+
+  get totalCount() {
+    return this._totalCount;
   }
 }

@@ -1,37 +1,35 @@
-import { Button, Stack } from "react-bootstrap";
-import CartItem from "../components/CartItem";
+import { Stack } from "react-bootstrap";
 import { fetchCart } from "../api/cartAPI";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { observer } from "mobx-react-lite";
+import CartList from "../components/CartList";
+import { Context } from "../main";
 
-const Cart = () => {
+const Cart = observer(() => {
+  const { device, cart } = useContext(Context);
+
   useEffect(() => {
-    fetchCart();
+    fetchCart().then((data) => {
+      cart.setCartDevices(data.rows);
+      cart.setTotalCount(data.count);
+    });
+
+    // fetchDevices(null, null, 1, 3).then((data) => {
+    //   device.setDevices(data.rows);
+    //   device.setTotalCount(data.count);
+    // });
   }, []);
 
-  const testArray = [1, 2, 3];
+  console.log(cart);
+  const deviceIds = cart.cartDevices.map((cartDevice) => cartDevice.deviceId);
+  console.log(deviceIds);
+
+  // const testArray = [1, 2, 3];
   return (
     <Stack className="col-md-5 mx-auto" gap={3}>
-      <div className="p-2 d-flex justify-content-center">
-        <b>Cart</b>
-      </div>
-      {testArray.map((item) => (
-        <CartItem key={item} />
-      ))}
-      <div
-        style={{ backgroundColor: "#f5f5f5" }}
-        className="p-2 mt-2 d-flex justify-content-end"
-      >
-        <div className="p-2">Total price incl. taxes</div>
-        <div className="p-2">
-          <b>1000 $</b>
-        </div>
-      </div>
-      <div className="py-2 d-flex justify-content-between">
-        <Button variant="dark">Back</Button>
-        <Button variant="dark">Pay</Button>
-      </div>
+      <CartList />
     </Stack>
   );
-};
+});
 
 export default Cart;

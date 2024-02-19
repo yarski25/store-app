@@ -33,6 +33,10 @@ const Auth = observer(() => {
     }
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <Container
       className="d-flex justify-content-center align-items-center"
@@ -40,7 +44,7 @@ const Auth = observer(() => {
     >
       <Card style={{ width: 600 }} className="p-5">
         <h2 className="m-auto">{isLogin ? "Login" : "Signup"}</h2>
-        <Form className="d-flex flex-column">
+        <Form className="d-flex flex-column" onSubmit={handleSubmit}>
           <Form.Control
             className="mt-3"
             placeholder="Insert your email..."
@@ -73,7 +77,7 @@ const Auth = observer(() => {
                 </NavLink>
               </div>
             )}
-            <Button onClick={authorize} variant="outline-success">
+            <Button type="submit" onClick={authorize} variant="outline-success">
               {isLogin ? "Log In" : "Sign Up"}
             </Button>
           </Stack>
