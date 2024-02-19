@@ -10,6 +10,7 @@ const Cart = observer(() => {
 
   useEffect(() => {
     fetchCart().then((data) => {
+      console.log(data.rows);
       cart.setCartDevices(data.rows);
       cart.setTotalCount(data.count);
     });
@@ -23,6 +24,8 @@ const Cart = observer(() => {
   console.log(cart);
   const deviceIds = cart.cartDevices.map((cartDevice) => cartDevice.deviceId);
   console.log(deviceIds);
+
+  console.log(cart.cartDevices);
 
   // const testArray = [1, 2, 3];
   return (

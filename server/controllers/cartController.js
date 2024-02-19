@@ -141,7 +141,7 @@ class CartController {
         where: { cartId: cart.id },
       });
 
-      if (!cartDevices.length) {
+      if (!cartDevices.rows.length) {
         return next(ApiError.internal("Cart is empty"));
       }
 
