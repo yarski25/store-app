@@ -77,6 +77,28 @@ class DeviceController {
     }
     return res.json(devices);
   }
+
+  async getAllById(req, res, next) {
+    try {
+      let { deviceIds, limit, page } = req.query;
+      page = page || 1;
+      limit = limit || 9;
+      let offset = page * limit - limit;
+      let devices;
+
+      if (deviceIds.length) {
+        devices = await Device.findAndCountAll({
+          where: { deviceIds },
+          limit,
+          offset,
+        });
+      }
+
+      return res.json(devices);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+  }
 }
 
 module.exports = new DeviceController();
