@@ -7,7 +7,7 @@ import { Context } from "../main";
 import { fetchDevicesById } from "../api/deviceAPI";
 
 const Cart = observer(() => {
-  const { device, cart } = useContext(Context);
+  const { cart } = useContext(Context);
   let cartDevices = [],
     deviceIds = [];
 
@@ -19,16 +19,16 @@ const Cart = observer(() => {
       cart.setTotalCount(data.count);
 
       deviceIds = cartDevices.map((cartDevice) => cartDevice.deviceId);
-      console.log(deviceIds);
 
       fetchDevicesById(deviceIds).then((data) => {
         // ES6 speciality
         console.log(data.rows);
-        cart.cartDevices = cart.cartDevices.map((cartDevice) => ({
+        cartDevices = cartDevices.map((cartDevice) => ({
           ...cartDevice,
           ...data.rows.find((device) => device.id === cartDevice.deviceId),
         }));
-        console.log(cart.cartDevices);
+        cart.setCartDevices(cartDevices);
+        console.log(cartDevices);
       });
     });
   }, []);
