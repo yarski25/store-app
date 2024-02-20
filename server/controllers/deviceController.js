@@ -78,20 +78,16 @@ class DeviceController {
     return res.json(devices);
   }
 
-  async getAllById(req, res, next) {
+  async getByIds(req, res, next) {
     try {
-      let { deviceIds, limit, page } = req.query;
-      page = page || 1;
-      limit = limit || 9;
-      let offset = page * limit - limit;
+      let { id } = req.query;
       let devices;
 
-      if (deviceIds.length) {
+      if (id.length) {
         devices = await Device.findAndCountAll({
-          where: { deviceIds },
-          limit,
-          offset,
-        });
+          where: { id },
+          //where: { [Op.in]: [6, 8] },
+        }).then(console.log(devices));
       }
 
       return res.json(devices);

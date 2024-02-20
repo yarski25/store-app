@@ -18,7 +18,7 @@ export default class CartStore {
     //   { id: 3, deviceId: 3, count: 0, cartId: 1},
     // ];
 
-    this._cartDevices = [];
+    // this._cartDevices = [];
 
     // this._cartDevice = [
     //   { id: 1, deviceId: 1, count: 0, cartId: 1, name: "Iphone 12 pro", price: 25000, img: "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-r1.jpg" },

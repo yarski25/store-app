@@ -8,27 +8,42 @@ import { fetchDevicesById } from "../api/deviceAPI";
 
 const Cart = observer(() => {
   const { device, cart } = useContext(Context);
-  let cartDevices = [];
+  let cartDevices = [],
+    deviceIds = [];
 
   useEffect(() => {
     fetchCart().then((data) => {
       cartDevices = data.rows;
+      console.log(cartDevices);
+      // cart.setCartDevices(data.rows);
       cart.setTotalCount(data.count);
+
+      deviceIds = cartDevices.map((cartDevice) => cartDevice.deviceId);
+      console.log(deviceIds);
+
+      fetchDevicesById(deviceIds).then((data) => {
+        // ES6 speciality
+        console.log(data.rows);
+        cart.cartDevices = cart.cartDevices.map((cartDevice) => ({
+          ...cartDevice,
+          ...data.rows.find((device) => device.id === cartDevice.deviceId),
+        }));
+        console.log(cart.cartDevices);
+      });
     });
   }, []);
 
-  useEffect(() => {
-    const deviceIds = cart.cartDevices.map((cartDevice) => cartDevice.deviceId);
-    fetchDevicesById(deviceIds, cart.page, cart.totalCount).then((data) => {
-      // ES6 speciality
-      console.log(data.rows);
-      cartDevices = cartDevices.map((cartDevice) => ({
-        ...cartDevice,
-        ...data.rows.find((device) => device.id === cartDevice.deviceId),
-      }));
-      console.log(cartDevices);
-    });
-  }, [cart.totalCount]);
+  // useEffect(() => {
+  //   fetchDevicesById(deviceIds).then((data) => {
+  //     // ES6 speciality
+  //     console.log(data.rows);
+  //     cart.cartDevices = cart.cartDevices.map((cartDevice) => ({
+  //       ...cartDevice,
+  //       ...data.rows.find((device) => device.id === cartDevice.deviceId),
+  //     }));
+  //     console.log(cart.cartDevices);
+  //   });
+  // }, [cart.totalCount]);
 
   return (
     <Stack className="col-md-5 mx-auto" gap={3}>

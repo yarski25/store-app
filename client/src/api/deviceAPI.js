@@ -37,13 +37,12 @@ export const fetchDevices = async (typeId, brandId, page, limit = 5) => {
   return data;
 };
 
-export const fetchDevicesById = async (deviceIds, page, limit = 5) => {
-  const { data } = await $host.get("api/device", {
+export const fetchDevicesById = async (ids) => {
+  const { data } = await $host.get("api/device/devices", {
     params: {
-      deviceIds,
-      page,
-      limit,
+      id: ids,
     },
+    paramsSerializer: { indexes: null },
   });
   return data;
 };
