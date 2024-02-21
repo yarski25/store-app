@@ -10,14 +10,8 @@ import {
 } from "react-bootstrap";
 
 const CartItem = ({ cartItem }) => {
-  console.log(cartItem);
   return (
     <>
-      {/* <Stack
-        className="d-flex justify-content-center"
-        direction="horizontal"
-        gap={3}
-      > */}
       <hr />
       <Row className="d-flex justify-content-center align-items-center mt-2">
         {/* <div className="p-2"> */}
@@ -31,10 +25,12 @@ const CartItem = ({ cartItem }) => {
         {/* </div> */}
         {/* <div className="p-2">{cartItem.name}</div>
         <div className="p-2">{cartItem.price}</div> */}
-        <Col md={5} className="">
+        <Col md={3} className="">
           {cartItem.name}
         </Col>
-        <Col md={2}>{cartItem.price} $</Col>
+        <Col md={2} className="d-flex justify-content-end">
+          {cartItem.price} $
+        </Col>
         {/* <div className="p-2"> */}
         <Col md={1}>
           <Form.Select
@@ -59,12 +55,13 @@ const CartItem = ({ cartItem }) => {
         {/* <Button variant="primary">Add/Remove</Button> */}
         {/* <ArrowSelect fontSize={24} fillColor={"black"} /> */}
         {/* <div className="p-2">{cartItem.price * cartItem.quantity}</div> */}
-        <Col md={1}>{cartItem.price * cartItem.quantity}</Col>
-        {/* <Button variant="dark">Add</Button> */}
-        <Col md={1}>
-          <Button variant="dark">Add</Button>
+        <Col md={2} className="d-flex justify-content-end">
+          {cartItem.price * cartItem.quantity} $
         </Col>
-        {/* </Stack> */}
+        {/* <Button variant="dark">Add</Button> */}
+        <Col md={2}>
+          <Button variant="dark">Delete</Button>
+        </Col>
       </Row>
     </>
   );
