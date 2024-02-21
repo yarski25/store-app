@@ -1,31 +1,47 @@
 import React from "react";
-import { Button, Form, Image, Stack } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Image,
+  Row,
+  Stack,
+} from "react-bootstrap";
 
 const CartItem = ({ cartItem }) => {
   console.log(cartItem);
   return (
     <>
-      <hr />
-      <Stack
+      {/* <Stack
         className="d-flex justify-content-center"
         direction="horizontal"
         gap={3}
-      >
-        <div className="p-2">
+      > */}
+      <hr />
+      <Row className="d-flex justify-content-center align-items-center mt-2">
+        {/* <div className="p-2"> */}
+        <Col md={1}>
           <Image
             src={process.env.REACT_APP_API_URL + "/" + cartItem.img}
-            fluid
-            height={100}
-            width={100}
+            height={40}
+            width={40}
           />
-        </div>
-        <div className="p-2">{cartItem.name}</div>
-        <div className="p-2">{cartItem.price}</div>
-        <div className="p-2">
+        </Col>
+        {/* </div> */}
+        {/* <div className="p-2">{cartItem.name}</div>
+        <div className="p-2">{cartItem.price}</div> */}
+        <Col md={5} className="">
+          {cartItem.name}
+        </Col>
+        <Col md={2}>{cartItem.price} $</Col>
+        {/* <div className="p-2"> */}
+        <Col md={1}>
           <Form.Select
             size="sm"
             value={cartItem.quantity}
             aria-label="Default select example"
+            style={{ width: "max-content", minWidth: "100%" }}
           >
             <option value="1">1</option>
             <option value="2">2</option>
@@ -37,13 +53,19 @@ const CartItem = ({ cartItem }) => {
             <option value="8">8</option>
             <option value="9">9</option>
           </Form.Select>
-        </div>
+        </Col>
+        {/* </div> */}
         {/* <div className="p-2">Count</div> */}
         {/* <Button variant="primary">Add/Remove</Button> */}
         {/* <ArrowSelect fontSize={24} fillColor={"black"} /> */}
-        <div className="p-2">{cartItem.price * cartItem.quantity}</div>
-        <Button variant="dark">Add</Button>
-      </Stack>
+        {/* <div className="p-2">{cartItem.price * cartItem.quantity}</div> */}
+        <Col md={1}>{cartItem.price * cartItem.quantity}</Col>
+        {/* <Button variant="dark">Add</Button> */}
+        <Col md={1}>
+          <Button variant="dark">Add</Button>
+        </Col>
+        {/* </Stack> */}
+      </Row>
     </>
   );
 };

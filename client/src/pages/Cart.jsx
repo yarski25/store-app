@@ -46,7 +46,10 @@ const Cart = observer(() => {
   // }, [cart.totalCount]);
 
   return (
-    <Stack className="col-md-5 mx-auto" gap={3}>
+    // <Stack className="col-md-5 mx-auto" gap={3}>
+    //   <CartList />
+    // </Stack>
+    <Stack className="col-md-7 mx-auto">
       <CartList />
     </Stack>
   );
