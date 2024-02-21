@@ -13,7 +13,7 @@ const CartList = observer(() => {
 
   return (
     <>
-      <div className="p-2 d-flex justify-content-center">
+      <div className="p-3 d-flex justify-content-center">
         <b>Cart</b>
       </div>
       <Container>
@@ -23,14 +23,14 @@ const CartList = observer(() => {
       </Container>
       <div
         style={{ backgroundColor: "#f5f5f5" }}
-        className="p-2 mt-2 d-flex justify-content-end"
+        className="px-2 m-2 mt-5 d-flex justify-content-end"
       >
         <div className="p-2">Total price incl. taxes</div>
         <div className="p-2">
           <b>{totalCount} $</b>
         </div>
       </div>
-      <div className="py-2 d-flex justify-content-between">
+      <div className="py-2 m-3 d-flex justify-content-between">
         <Button variant="dark">Back</Button>
         <Button variant="dark">Pay</Button>
       </div>
