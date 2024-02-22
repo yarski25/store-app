@@ -1,20 +1,26 @@
-import React from "react";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  Image,
-  Row,
-  Stack,
-} from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Form, Image, Row } from "react-bootstrap";
 
 const CartItem = ({ cartItem }) => {
+  const quantities = [...Array(10).keys()].map((i) => (i + 1).toString());
+  const [quantity, setQuantity] = useState(cartItem.quantity.toString());
+
+  const handleQuantity = (event) => {
+    setQuantity(event.target.value);
+  };
+
+  const handleDelete = () => {
+    // TODO!
+  };
+
+  useEffect(() => {
+    console.log(quantity);
+  }, [quantity]);
+
   return (
     <>
       <hr />
       <Row className="d-flex justify-content-center align-items-center mt-2">
-        {/* <div className="p-2"> */}
         <Col md={1}>
           <Image
             src={process.env.REACT_APP_API_URL + "/" + cartItem.img}
@@ -22,45 +28,34 @@ const CartItem = ({ cartItem }) => {
             width={40}
           />
         </Col>
-        {/* </div> */}
-        {/* <div className="p-2">{cartItem.name}</div>
-        <div className="p-2">{cartItem.price}</div> */}
         <Col md={3} className="">
           {cartItem.name}
         </Col>
         <Col md={2} className="d-flex justify-content-end">
           {cartItem.price} $
         </Col>
-        {/* <div className="p-2"> */}
         <Col md={1}>
           <Form.Select
             size="sm"
-            value={cartItem.quantity}
+            value={quantity}
+            onChange={handleQuantity}
             aria-label="Default select example"
             style={{ width: "max-content", minWidth: "100%" }}
           >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
+            {quantities.map((label, index) => (
+              <option key={index} value={label}>
+                {label}
+              </option>
+            ))}
           </Form.Select>
         </Col>
-        {/* </div> */}
-        {/* <div className="p-2">Count</div> */}
-        {/* <Button variant="primary">Add/Remove</Button> */}
-        {/* <ArrowSelect fontSize={24} fillColor={"black"} /> */}
-        {/* <div className="p-2">{cartItem.price * cartItem.quantity}</div> */}
         <Col md={2} className="d-flex justify-content-end">
           {cartItem.price * cartItem.quantity} $
         </Col>
-        {/* <Button variant="dark">Add</Button> */}
         <Col md={2}>
-          <Button variant="dark">Delete</Button>
+          <Button variant="dark" onClick={handleDelete}>
+            Delete
+          </Button>
         </Col>
       </Row>
     </>
