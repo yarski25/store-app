@@ -9,7 +9,6 @@ const CartList = observer(() => {
   let totalCount = cart.cartDevices
     .map((cartDevice) => cartDevice.quantity * cartDevice.price)
     .reduce((sum, x) => sum + x, 0);
-  console.log(totalCount);
 
   return (
     <>

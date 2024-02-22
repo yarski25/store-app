@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Image, Row } from "react-bootstrap";
 
 const CartItem = ({ cartItem }) => {
+  // array of options
   const quantities = [...Array(10).keys()].map((i) => (i + 1).toString());
+
   const [quantity, setQuantity] = useState(cartItem.quantity.toString());
 
   const handleQuantity = (event) => {
@@ -12,10 +14,6 @@ const CartItem = ({ cartItem }) => {
   const handleDelete = () => {
     // TODO!
   };
-
-  useEffect(() => {
-    console.log(quantity);
-  }, [quantity]);
 
   return (
     <>
