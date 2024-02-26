@@ -2,6 +2,30 @@ const ApiError = require("../error/apiError");
 const { Cart, CartDevice } = require("../models/models");
 
 class CartController {
+  async getAll(req, res, next) {
+    try {
+      const currentUser = req.user.id;
+
+      const cart = await Cart.findOne({ currentUser });
+
+      if (!cart) {
+        return next(ApiError.internal("Cart not found"));
+      }
+
+      const cartDevices = await CartDevice.findAndCountAll({
+        where: { cartId: cart.id },
+      });
+
+      if (!cartDevices.rows.length) {
+        return next(ApiError.internal("Cart is empty"));
+      }
+
+      return res.json(cartDevices);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+  }
+
   async create(req, res, next) {
     try {
       // get current logged user id
@@ -58,10 +82,20 @@ class CartController {
     }
   }
 
-  async delete(req, res, next) {
+  async update(req, res, next) {
     try {
       // get current logged user id
       const currentUser = req.user.id;
+
+      if (!currentUser) return next(ApiError.internal("User is not logged"));
+
+      // get requested device id and its quantity from body
+      let { deviceId, quantity } = req.body;
+
+      if (quantity < 1)
+        return next(
+          ApiError.internal("Requested quantity must be more than 1")
+        );
 
       // get cart id related to the current user id
       const cart = await Cart.findOne({ currentUser });
@@ -70,8 +104,8 @@ class CartController {
         return next(ApiError.internal("Cart not found"));
       }
 
-      // get requested device id and its quantity from body
-      let { deviceId, quantity } = req.body;
+      console.log("STOP!!!");
+      console.log(req.body);
 
       // get all devices with current device id related to the current cart id
       const { count, rows } = await CartDevice.findAndCountAll({
@@ -79,9 +113,7 @@ class CartController {
       });
 
       if (count === 0) {
-        return next(
-          ApiError.internal(`Cart device ${deviceId} is already deleted`)
-        );
+        return next(ApiError.internal(`Cart device ${deviceId} is not found`));
       }
 
       if (count > 1) {
@@ -92,28 +124,16 @@ class CartController {
         );
       }
 
-      if (quantity > rows[0].quantity) {
+      // case #1 if quantity equals to quantity in db
+      if (quantity === rows[0].quantity) {
         return next(
-          ApiError.internal(
-            "Quantity to delete exceeds quantity related to the device"
-          )
+          ApiError.internal(`No quantity change for device ID ${deviceId}`)
         );
       }
 
-      // case #1 if quantity equals to quantity in db
-      if (quantity === rows[0].quantity) {
-        const cartDevice = await CartDevice.destroy({
-          where: {
-            deviceId: deviceId,
-          },
-        });
-
-        return res.json(cartDevice);
-      }
-
-      // case #2 if quantity to delete less than quantity in db
+      // case #2 otherwise quantity in db
       const cartDevice = await CartDevice.update(
-        { quantity: rows[0].quantity - quantity },
+        { quantity: quantity },
         {
           where: {
             deviceId: deviceId,
@@ -127,25 +147,46 @@ class CartController {
     }
   }
 
-  async getAll(req, res, next) {
+  async delete(req, res, next) {
     try {
+      // get current logged user id
       const currentUser = req.user.id;
 
+      // get cart id related to the current user id
       const cart = await Cart.findOne({ currentUser });
 
       if (!cart) {
         return next(ApiError.internal("Cart not found"));
       }
 
-      const cartDevices = await CartDevice.findAndCountAll({
-        where: { cartId: cart.id },
+      // get device id from query
+
+      const { id } = req.params;
+
+      // get all devices with current device id related to the current cart id
+      const { count } = await CartDevice.findAndCountAll({
+        where: { cartId: cart.id, deviceId: id },
       });
 
-      if (!cartDevices.rows.length) {
-        return next(ApiError.internal("Cart is empty"));
+      if (count === 0) {
+        return next(ApiError.internal(`Cart device ${id} is already deleted`));
       }
 
-      return res.json(cartDevices);
+      if (count > 1) {
+        return next(
+          ApiError.internal(
+            `Cart has multiple cart devices with the same device ID ${id}`
+          )
+        );
+      }
+
+      const cartDevice = await CartDevice.destroy({
+        where: {
+          deviceId: id,
+        },
+      });
+
+      return res.json(cartDevice);
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }

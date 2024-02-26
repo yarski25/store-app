@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Image, Row } from "react-bootstrap";
+import { deleteCartItem, updateCartItem } from "../api/cartAPI";
 
 const CartItem = ({ cartItem }) => {
   // array of options
@@ -8,10 +9,23 @@ const CartItem = ({ cartItem }) => {
   const [quantity, setQuantity] = useState(cartItem.quantity.toString());
 
   const handleQuantity = (event) => {
-    setQuantity(event.target.value);
+    console.log({
+      deviceId: cartItem.deviceId,
+      quantity: Number(event.target.value),
+    });
+    updateCartItem({
+      deviceId: cartItem.deviceId,
+      quantity: Number(event.target.value),
+    }).then((data) => {
+      console.log(data);
+      setQuantity(event.target.value);
+    });
   };
 
   const handleDelete = () => {
+    deleteCartItem(cartItem).then((data) => {
+      console.log(data);
+    });
     // TODO!
   };
 
@@ -36,6 +50,7 @@ const CartItem = ({ cartItem }) => {
           <Form.Select
             size="sm"
             value={quantity}
+            key={quantity}
             onChange={handleQuantity}
             aria-label="Default select example"
             style={{ width: "max-content", minWidth: "100%" }}
