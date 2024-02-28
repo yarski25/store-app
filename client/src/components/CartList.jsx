@@ -6,8 +6,8 @@ import CartItem from "./CartItem";
 
 const CartList = observer(() => {
   const { cart } = useContext(Context);
-  let totalCount = cart.cartDevices
-    .map((cartDevice) => cartDevice.quantity * cartDevice.price)
+  let totalCount = cart.cartItems
+    .map((cartItem) => cartItem.quantity * cartItem.price)
     .reduce((sum, x) => sum + x, 0);
 
   return (
@@ -16,7 +16,7 @@ const CartList = observer(() => {
         <b>Cart</b>
       </div>
       <Container>
-        {cart.cartDevices.map((cartItem) => (
+        {cart.cartItems.map((cartItem) => (
           <CartItem key={cartItem.id} cartItem={cartItem} />
         ))}
       </Container>

@@ -6,28 +6,31 @@ const CartItem = ({ cartItem }) => {
   // array of options
   const quantities = [...Array(10).keys()].map((i) => (i + 1).toString());
 
-  const [quantity, setQuantity] = useState(cartItem.quantity.toString());
+  const [quantity, setQuantity] = useState(cartItem.quantity);
+  const [price, setPrice] = useState(cartItem.price);
+  const [totalPrice, setTotalPrice] = useState(
+    cartItem.price * cartItem.quantity
+  );
 
-  const handleQuantity = (event) => {
-    console.log({
-      deviceId: cartItem.deviceId,
-      quantity: Number(event.target.value),
-    });
+  const handleQuantity = (e) => {
     updateCartItem({
       deviceId: cartItem.deviceId,
-      quantity: Number(event.target.value),
-    }).then((data) => {
-      console.log(data);
-      setQuantity(event.target.value);
+      quantity: Number(e.target.value),
+    }).then(() => {
+      console.log("cart item updated");
     });
+    setQuantity(e.target.value);
   };
 
   const handleDelete = () => {
-    deleteCartItem(cartItem).then((data) => {
-      console.log(data);
+    deleteCartItem(cartItem.deviceId).then(() => {
+      console.log("cart item deleted");
     });
-    // TODO!
   };
+
+  useEffect(() => {
+    setTotalPrice(price * quantity);
+  }, [quantity]);
 
   return (
     <>
@@ -44,13 +47,12 @@ const CartItem = ({ cartItem }) => {
           {cartItem.name}
         </Col>
         <Col md={2} className="d-flex justify-content-end">
-          {cartItem.price} $
+          {price.toString()} $
         </Col>
         <Col md={1}>
           <Form.Select
             size="sm"
-            value={quantity}
-            key={quantity}
+            value={quantity.toString()}
             onChange={handleQuantity}
             aria-label="Default select example"
             style={{ width: "max-content", minWidth: "100%" }}
@@ -63,7 +65,7 @@ const CartItem = ({ cartItem }) => {
           </Form.Select>
         </Col>
         <Col md={2} className="d-flex justify-content-end">
-          {cartItem.price * cartItem.quantity} $
+          {totalPrice.toString()} $
         </Col>
         <Col md={2}>
           <Button variant="dark" onClick={handleDelete}>

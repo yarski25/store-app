@@ -10,7 +10,7 @@ export default class CartStore {
     //   { id: 3, userId: 3 },
     // ];
 
-    this._cartDevices = [];
+    this._cartItems = [];
 
     // this._cartDevice = [
     //   { id: 1, deviceId: 1, count: 0, cartId: 1},
@@ -43,8 +43,8 @@ export default class CartStore {
     this._cart = cart;
   }
 
-  setCartDevices(cartDevices) {
-    this._cartDevices = cartDevices;
+  setCartItems(cartItems) {
+    this._cartItems = cartItems;
   }
 
   setPage(page) {
@@ -63,8 +63,8 @@ export default class CartStore {
     return this._cart;
   }
 
-  get cartDevices() {
-    return this._cartDevices;
+  get cartItems() {
+    return this._cartItems;
   }
 
   get page() {
