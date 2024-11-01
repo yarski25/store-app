@@ -1,12 +1,10 @@
 import { $authHost, $host } from "./index";
 
+// **********************
+// only authorized host
+// **********************
 export const createType = async (type) => {
   const { data } = await $authHost.post("api/type", type);
-  return data;
-};
-
-export const fetchTypes = async () => {
-  const { data } = await $host.get("api/type");
   return data;
 };
 
@@ -15,13 +13,27 @@ export const createBrand = async (brand) => {
   return data;
 };
 
-export const fetchBrands = async () => {
-  const { data } = await $host.get("api/brand");
+export const createDevice = async (device) => {
+  const { data } = await $authHost.post("api/device", device);
   return data;
 };
 
-export const createDevice = async (device) => {
-  const { data } = await $authHost.post("api/device", device);
+export const deleteOneDevice = async (id) => {
+  const { data } = await $authHost.delete("api/device/" + id);
+  return data;
+};
+
+// ************
+// all hosts
+// ************
+
+export const fetchTypes = async () => {
+  const { data } = await $host.get("api/type");
+  return data;
+};
+
+export const fetchBrands = async () => {
+  const { data } = await $host.get("api/brand");
   return data;
 };
 
