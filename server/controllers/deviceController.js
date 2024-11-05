@@ -95,6 +95,28 @@ class DeviceController {
       next(ApiError.badRequest(e.message));
     }
   }
+
+  async deleteOne(req, res, next) {
+    const { id } = req.params;
+    // check if device exists
+    const device = await Device.findOne({
+      where: { id },
+    });
+
+    if (!device) {
+      return next(ApiError.internal(`Device ${id} not found`));
+    }
+
+    // delete device
+    try {
+      const count = await Device.destroy({
+        where: { id },
+      });
+      return res.json(`Device ${id} is deleted`);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+  }
 }
 
 module.exports = new DeviceController();
