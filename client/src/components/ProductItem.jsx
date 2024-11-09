@@ -5,8 +5,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 // import DeviceStore from "../store/DeviceStore";
 import star from "../assets/star.png";
 
-const ProductItem = ({ device }) => {
+const ProductItem = ({ device, brand }) => {
+  // console.log(device);
   const navigate = useNavigate();
+  // let brands = device.brands.map((brand) => brand.name);
+  // console.log(brands);
   return (
     <Col
       md={3}
@@ -30,7 +33,7 @@ const ProductItem = ({ device }) => {
         <Card.Body>
           {/* <Card.Title>{device.name}</Card.Title> */}
           <Card.Text className="text-black-50 d-flex justify-content-between align-items-center">
-            <div>Samsung...</div>
+            <div>{brand}</div>
             <div className="d-flex align-items-center">
               <div>{device.rating}</div>
               <Image width={16} height={16} src={star} />
