@@ -6,13 +6,6 @@ import ProductItem from "./ProductItem";
 
 const ProductList = observer(() => {
   const { device } = useContext(Context);
-  // let brands = {};
-  // device.brands.map((brand) => (brands[brand.id] = brand.name));
-  // let brands = device.brands;
-  // let brands = device.brands
-  //   .filter((brand) => brand.id === 2)
-  //   .map((brand) => brand.name)[0];
-  // console.log(brands);
   return (
     // <Stack className="d-flex flex-row flex-wrap">
     <Row className="d-flex">

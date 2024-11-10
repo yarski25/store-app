@@ -21,7 +21,7 @@ const NavBar = observer(() => {
           style={{ color: "white", textDecoration: "none" }}
           to={SHOP_ROUTE}
         >
-          Buy device
+          Go to shop
         </NavLink>
         {user.isAuth ? (
           <Nav className="ml-auto" style={{ color: "white" }}>
