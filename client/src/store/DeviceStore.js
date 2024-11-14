@@ -28,7 +28,8 @@ export default class DeviceStore {
     ];
 
     this._selectedType = {};
-    this._selectedBrand = {};
+    this._selectedBrand = {}; // {brandId: 1, brandName: name}
+    this._selectedBrands = []; // [{brandId: 1, brandName: name1}, {brandId: 2, brandName: name2}]
     this._page = 1; // current page
     this._totalCount = 0; // total count of pages during request
     this._limit = 3; // number of products on the page
@@ -56,6 +57,11 @@ export default class DeviceStore {
   setSelectedBrand(brand) {
     this.setPage(1);
     this._selectedBrand = brand;
+  }
+
+  setSelectedBrands(brands) {
+    this.setPage(1);
+    this._selectedBrands = brands;
   }
 
   setPage(page) {
@@ -88,6 +94,10 @@ export default class DeviceStore {
 
   get selectedBrand() {
     return this._selectedBrand;
+  }
+
+  get selectedBrands() {
+    return this._selectedBrands;
   }
 
   get page() {
